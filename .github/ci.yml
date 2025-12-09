@@ -1,0 +1,26 @@
+name: CI - Node.js Server Test
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        working-directory: review_server
+        run: npm install
+
+      - name: Run Test Script
+        working-directory: review_server
+        run: npm test
