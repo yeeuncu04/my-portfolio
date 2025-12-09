@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Yeeun Chu • Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+
+  <!-- 상단 헤더 -->
+  <header class="header">
+    <div class="container nav-area">
+      <div class="logo-area">
+        <h1 class="logo">Yeeun Chu</h1>
+        <p class="logo-sub">추 예 은 / 秋 禮 恩</p>
+      </div>
+
+      <nav class="nav">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- 메인 히어로 -->
+  <section class="hero" id="portfolio">
+    <div class="hero-bg-box">
+      <div class="container hero-wrap">
+
+        <div class="hero-text">
+          <span class="hero-pill">WEB · UX/UI · FRONT-END</span>
+          <h2 class="title">Portfolio</h2>
+          <p class="hero-sub">
+            전공 수업과 개인 공부를 통해 만들었던 웹 디자인·개발 프로젝트 모음입니다.
+          </p>
+          <div class="hero-buttons">
+            <a href="#projects" class="btn-primary">Projects 보기</a>
+            <a href="#contact" class="btn-outline">Contact</a>
+          </div>
+        </div>
+
+        <!-- 프로필 카드 (호버 시 뒤집힘) -->
+        <aside class="profile-card">
+          <div class="card-inner">
+            <!-- 앞면 -->
+            <div class="card-face card-front">
+              <div class="profile-top">
+                <div class="icon">★</div>
+                <div class="pname">
+                  <span class="kr">추 예 은</span>
+                  <span class="slash">/</span>
+                  <span class="en">Yeeun Chu</span>
+                </div>
+              </div>
+              <div class="chips">
+                <span class="chip">군산대학교 재학</span>
+                <span class="chip">컴퓨터 관련 전공</span>
+                <span class="chip">웹 포트폴리오 제작</span>
+                <span class="flip-hint-inline">※ 마우스를 올려주세요</span>
+              </div>
+            </div>
+
+            <!-- 뒷면 (증명사진) -->
+            <div class="card-face card-back">
+              <!-- 사진 경로는 너 파일에 맞게 바꿔줘 -->
+              <img src="images/profile.png" alt="프로필 사진" class="profile-photo" />
+              <p class="profile-back-name">추 예 은 · Yeeun Chu</p>
+              <p class="profile-back-sub">군산대학교 · 컴퓨터 관련 전공</p>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로젝트 영역 -->
+  <section class="section-bg">
+    <div class="container">
+
+      <section class="glass section" id="projects">
+        <h2 class="sec-title">Projects</h2>
+        <p class="sec-sub">수업 과제와 개인 연습으로 만든 웹디자인 작업들입니다.</p>
+
+        <div class="project-list">
+
+          <!-- ✅ 군산 소개 웹 페이지 : 흰색 + 확대 + 하늘색 네온 glow + 링크 -->
+          <a href="main.html"
+             class="project-main"
+             target="_blank"
+             rel="noopener noreferrer">
+            <h3>군산 소개 웹 페이지</h3>
+            <p class="meta">2025 · School Project</p>
+            <p>
+              군산의 주요 관광지와 지역 정보를 카드 레이아웃으로 정리한
+              반응형 웹페이지.
+            </p>
+          </a>
+
+          <!-- 나머지 프로젝트 카드 -->
+          <article class="project">
+            <h3>개인 포트폴리오 메인</h3>
+            <p class="meta">2025 · Personal</p>
+            <p>브라우저 프레임과 일러스트 분위기를 활용한 디자인 페이지.</p>
+          </article>
+
+          <article class="project">
+            <h3>Coming Soon</h3>
+            <p class="meta">추가 예정</p>
+            <p>모바일 UI, 게임 UI 등 다양한 작업들을 추가할 예정입니다.</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- Contact -->
+<!-- ============================= -->
+<!-- 📬 CONTACT SECTION (index.html 내부) -->
+<!-- ============================= -->
+
+<section id="contact" style="padding: 60px 0; width:100%; display:flex; justify-content:center;">
+  <div style="
+    width: 100%;
+    max-width: 1400px;
+    padding: 40px 32px 60px;
+    border-radius: 32px;
+    background: linear-gradient(135deg, #f9fbff, #f5f2ff);
+    box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
+  ">
+    
+    <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 10px; color:#111827;">
+      Contact
+    </h1>
+
+    <p style="color:#6b7280; margin-bottom:16px;">
+      협업 제안이나 문의는 아래 메일로 연락해주세요.
+    </p>
+
+    <div style="margin-bottom: 26px;">
+      <span>📧</span>
+      <a href="mailto:yeeuncu04@naver.com" 
+      style="color:#2563eb; font-weight:600; text-decoration:none;">
+        yeeuncu04@naver.com
+      </a>
+    </div>
+
+    <!-- FORM -->
+    <form id="contactForm" style="display:flex; flex-direction:column; gap:14px;">
+
+      <input id="name" type="text" placeholder="이름 / Name" required
+        style="padding:14px 16px; border-radius:14px; border:1px solid #cbd5e1;">
+
+      <input id="email" type="email" placeholder="이메일 / Email" required
+        style="padding:14px 16px; border-radius:14px; border:1px solid #cbd5e1;">
+
+      <textarea id="msg" placeholder="메시지를 입력해주세요." required
+        style="padding:14px 16px; border-radius:14px; border:1px solid #cbd5e1; min-height:180px;"></textarea>
+
+      <button id="sendBtn" type="submit"
+        style="
+          padding:12px 22px;
+          background: linear-gradient(135deg, #60a5fa, #4f46e5);
+          color:white; font-weight:600;
+          border:none; border-radius:999px;
+          box-shadow: 0 10px 25px rgba(59,130,246,0.4);
+          cursor:pointer;
+        ">
+        메시지 보내기
+      </button>
+
+      <p id="statusText" style="font-size:14px; min-height:20px;"></p>
+
+    </form>
+
+  </div>
+</section>
+
+<script>
+const API_BASE = "http://localhost:3000";
+
+const form = document.getElementById("contactForm");
+const btn = document.getElementById("sendBtn");
+const statusText = document.getElementById("statusText");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const message = document.getElementById("msg").value.trim();
+
+  if (!name || !email || !message) {
+    statusText.textContent = "모든 입력 칸을 채워주세요.";
+    statusText.style.color = "#dc2626";
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = "전송 중...";
+  statusText.textContent = "";
+
+  try {
+    const res = await fetch(API_BASE + "/api/message", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ name, email, message }),
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      statusText.textContent = "메시지가 성공적으로 저장되었습니다!";
+      statusText.style.color = "#059669";
+      form.reset();
+    } else {
+      statusText.textContent = data.msg || "전송 중 오류가 발생했습니다.";
+      statusText.style.color = "#dc2626";
+    }
+
+  } catch (err) {
+    console.error(err);
+    statusText.textContent = "서버에 연결할 수 없습니다. (Node.js 실행 확인!)";
+    statusText.style.color = "#dc2626";
+  } finally {
+    btn.disabled = false;
+    btn.textContent = "메시지 보내기";
+  }
+});
+</script>
+<footer>
+  <!-- 일반 방문자에게는 잘 안보이게 작게 -->
+  <a href="message_list.html" style="font-size: 12px; color:#9ca3af;">
+    관리자 메시지 확인
+  </a>
+</footer>
+
+
+</body>
+</html>

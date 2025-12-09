@@ -4,8 +4,8 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch Chrome from local file path",
-      "file": "C:/Users/USER/Desktop/web/index.html"
+      "name": "Open Current File in Browser",
+      "file": "${file}"
     }
   ]
 }

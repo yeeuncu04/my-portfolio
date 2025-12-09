@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>군산 유적지 후기 게시판</title>
+  <link rel="stylesheet" href="review.css">
+</head>
+<body>
+  <div class="container">
+    <h1>군산 유적지 후기 게시판</h1>
+
+    <form id="review-form">
+      <input type="text" id="name" placeholder="이름" required />
+      <textarea id="comment" placeholder="후기를 입력하세요" required></textarea>
+      <button type="submit">등록</button>
+    </form>
+
+    <!-- 후기 목록이 들어갈 자리 -->
+    <div id="review-list" class="review-list"></div>
+  </div>
+
+  <script src="review.js"></script>
+</body>
+</html>

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>군산 관광지 즐겨찾기 (찜)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- 스타일 -->
+  <style>
+    :root {
+      --mint: #70f7b0;
+      --mint-deep: #35d58a;
+      --navy: #173b7a;
+      --lavender: #f1ecff;
+      --chip-bg: #e8f8ff;
+      --rank-bg: #faf5ff;
+      --card-bg: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 24px 12px;
+      background: radial-gradient(circle at top left, #f4fff9 0, #f5fbff 40%, #fff5fb 100%);
+      color: #222;
+    }
+
+    .container {
+      max-width: 1080px;
+      margin: 0 auto 40px;
+      background: var(--card-bg);
+      border-radius: 26px;
+      padding: 24px 26px 30px;
+      box-shadow:
+        0 18px 40px rgba(20, 36, 80, 0.12),
+        0 0 0 1px rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(154, 180, 214, 0.2);
+    }
+
+    /* 헤더 */
+    h1 {
+      margin: 0 0 6px;
+      font-size: 1.7rem;
+      letter-spacing: 0.03em;
+      color: #111827;
+    }
+
+    .subtitle {
+      margin: 0 0 18px;
+      font-size: 0.9rem;
+      color: #6b7280;
+      line-height: 1.6;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      font-size: 0.72rem;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #4f46e5;
+      margin-left: 8px;
+      font-weight: 600;
+    }
+
+    .tag-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4f46e5;
+    }
+
+    .header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      margin-bottom: 10px;
+    }
+
+    .header-right {
+      font-size: 0.8rem;
+      color: #9ca3af;
+      text-align: right;
+    }
+
+    .header-right strong {
+      color: #4b5563;
+    }
+
+    /* 전체 레이아웃 */
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(260px, 1.3fr);
+      gap: 18px;
+    }
+
+    /* 관광지 리스트 영역 */
+    .section-title {
+      margin: 0 0 6px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .section-desc {
+      margin: 0 0 12px;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
+
+    .highlight {
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .place-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 12px;
+    }
+
+    .place-card {
+      position: relative;
+      border-radius: 18px;
+      padding: 12px 12px 12px 14px;
+      background: linear-gradient(135deg, #ffffff 0%, #f9feff 100%);
+      border: 1px solid rgba(209, 213, 219, 0.7);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      overflow: hidden;
+    }
+
+    .place-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 18px;
+      background: radial-gradient(circle at top left, rgba(112, 247, 176, 0.14), transparent 50%);
+      pointer-events: none;
+    }
+
+    .place-name {
+      font-weight: 700;
+      font-size: 0.96rem;
+      color: #111827;
+    }
+
+    .place-desc {
+      font-size: 0.85rem;
+      color: #4b5563;
+    }
+
+    .place-meta {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .place-meta .pin {
+      margin-right: 3px;
+    }
+
+    .place-likes {
+      font-size: 0.8rem;
+      color: #374151;
+      margin-top: 2px;
+    }
+
+    .likes-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: #ecfdf5;
+      color: #047857;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .likes-pill .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #10b981;
+    }
+
+    .btn-row {
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
+      z-index: 1;
+    }
+
+    button {
+      border-radius: 999px;
+      border: none;
+      padding: 8px 16px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      background: linear-gradient(135deg, var(--mint) 0%, var(--mint-deep) 100%);
+      font-weight: 700;
+      color: #064e3b;
+      box-shadow: 0 6px 16px rgba(34, 197, 94, 0.35);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+    }
+
+    button span.icon {
+      font-size: 1rem;
+    }
+
+    button:hover {
+      filter: brightness(0.97);
+      transform: translateY(-1px);
+      box-shadow: 0 9px 20px rgba(34, 197, 94, 0.45);
+    }
+
+    button:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 10px rgba(34, 197, 94, 0.3);
+    }
+
+    button:disabled {
+      opacity: 0.65;
+      cursor: default;
+      box-shadow: none;
+      transform: none;
+    }
+
+    /* 우측: 랭킹 카드 */
+    .ranking-card {
+      border-radius: 20px;
+      padding: 14px 16px 16px;
+      background: radial-gradient(circle at top right, #fef2ff 0, #f9f5ff 40%, #f5f3ff 100%);
+      border: 1px solid rgba(196, 181, 253, 0.7);
+      box-shadow: 0 12px 30px rgba(88, 28, 135, 0.12);
+      display: flex;
+      flex-direction: column;
+      min-height: 220px;
+    }
+
+    .ranking-title {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .ranking-sub {
+      margin: 0 0 10px;
+      font-size: 0.78rem;
+      color: #6b7280;
+    }
+
+    .ranking-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.88rem;
+      flex: 1;
+    }
+
+    .ranking-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px 0;
+      border-bottom: 1px dashed rgba(209, 213, 219, 0.7);
+    }
+
+    .ranking-item:last-child {
+      border-bottom: none;
+    }
+
+    .ranking-left {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rank-badge {
+      min-width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    }
+
+    .rank-1 {
+      background: linear-gradient(135deg, #f59e0b, #f97316);
+    }
+
+    .rank-2 {
+      background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    }
+
+    .rank-3 {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+    }
+
+    .ranking-count {
+      font-size: 0.86rem;
+      color: #4c1d95;
+      font-weight: 600;
+    }
+
+    .ranking-count small {
+      font-size: 0.74rem;
+      color: #6b21a8;
+    }
+
+    .ranking-footer {
+      font-size: 0.78rem;
+      color: #6b7280;
+      margin-top: 8px;
+      text-align: right;
+    }
+
+    /* 상태 메시지 */
+    .status {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .error {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 900px) {
+      .container {
+        padding: 20px 16px 24px;
+        border-radius: 20px;
+      }
+
+      .header-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .ranking-card {
+        order: -1;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 16px 10px;
+      }
+
+      h1 {
+        font-size: 1.35rem;
+      }
+
+      .place-list {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+
+  <!-- React + Babel -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const API_BASE = "http://localhost:3000";
+
+    // 군산 주요 관광지 목록 (정적 데이터)
+    const PLACES = [
+      {
+        id: "shinhung-house",
+        name: "신흥동 일본식 가옥",
+        desc: "근대 일본식 주택이 잘 보존된 골목 풍경.",
+        area: "신흥동 근대문화거리",
+      },
+      {
+        id: "modern-museum",
+        name: "군산 근대역사박물관",
+        desc: "군산의 근대 역사와 문화를 전시하는 대표 박물관.",
+        area: "내항 일대",
+      },
+      {
+        id: "gyeongam-dong",
+        name: "경암동 철길마을",
+        desc: "옛 철길과 감성 있는 벽화로 유명한 마을.",
+        area: "경암동",
+      },
+      {
+        id: "eunpa-lake",
+        name: "은파호수공원",
+        desc: "산책로와 야경이 아름다운 호수공원.",
+        area: "나운동",
+      },
+      {
+        id: "dongguksa",
+        name: "동국사",
+        desc: "전국 유일의 일본식 목조건축 사찰.",
+        area: "동국사 일대",
+      },
+      {
+        id: "wolmyeong-park",
+        name: "월명공원",
+        desc: "전망대에서 군산 시내와 서해를 한눈에 볼 수 있는 공원.",
+        area: "월명산",
+      },
+    ];
+
+    function FavoritesApp() {
+      const [favorites, setFavorites] = React.useState([]);
+      const [loading, setLoading] = React.useState(false);
+      const [error, setError] = React.useState("");
+
+      const totalLikes = favorites.reduce((sum, f) => sum + (f.likes || 0), 0);
+
+      // 탭 제목 변경 (BOM 활용)
+      React.useEffect(() => {
+        document.title = `군산 관광지 즐겨찾기 (${totalLikes}회 찜)`;
+      }, [totalLikes]);
+
+      React.useEffect(() => {
+        fetchFavorites();
+      }, []);
+
+      const fetchFavorites = async () => {
+        try {
+          setLoading(true);
+          setError("");
+          const res = await fetch(`${API_BASE}/favorites`);
+          if (!res.ok) throw new Error("목록 불러오기 실패");
+          const data = await res.json();
+          setFavorites(data);
+        } catch (e) {
+          console.error(e);
+          setError("즐겨찾기 정보를 불러오는 데 실패했습니다. (서버/DB 확인)");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      const getLikesForPlace = (placeName) => {
+        const found = favorites.find((f) => f.placeName === placeName);
+        return found ? found.likes : 0;
+      };
+
+      const handleFavorite = async (place) => {
+        try {
+          setLoading(true);
+          setError("");
+          const res = await fetch(`${API_BASE}/favorites`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ placeId: place.id, placeName: place.name }),
+          });
+          if (!res.ok) throw new Error("업데이트 실패");
+          const data = await res.json();
+          setFavorites(data);
+        } catch (e) {
+          console.error(e);
+          setError("즐겨찾기를 저장하는 데 실패했습니다.");
+        } finally {
+          setLoading(false);
+        }
+      };
+
+      return (
+        <div className="container">
+          <div className="header-row">
+            <div>
+              <h1>
+                군산 관광지 즐겨찾기
+                <span className="tag">
+                  <span className="tag-dot" />
+                  React · MongoDB
+                </span>
+              </h1>
+              <p className="subtitle">
+                군산의 주요 관광지를 React로 렌더링하고, Node.js + MongoDB를 이용해
+                찜(즐겨찾기) 횟수를 저장합니다.
+              </p>
+            </div>
+            <div className="header-right">
+              총 찜 수 <strong>{totalLikes}</strong>회<br />
+              기록된 관광지 수 <strong>{favorites.length}</strong>개
+            </div>
+          </div>
+
+          {loading && <div className="status">⏳ 서버와 통신 중...</div>}
+          {error && <div className="error">{error}</div>}
+
+          <div className="layout">
+            {/* 왼쪽: 관광지 카드 목록 */}
+            <div>
+              <h3 className="section-title">관광지 목록</h3>
+              <p className="section-desc">
+                마음에 드는 장소를 <span className="highlight">⭐ 찜하기</span> 하면,
+                오른쪽에 인기 관광지 순위가 업데이트됩니다.
+              </p>
+
+              <div className="place-list">
+                {PLACES.map((p) => (
+                  <div className="place-card" key={p.id}>
+                    <div className="place-name">{p.name}</div>
+                    <div className="place-desc">{p.desc}</div>
+                    <div className="place-meta">
+                      <span className="pin">📍</span>{p.area}
+                    </div>
+                    <div className="place-likes">
+                      <span className="likes-pill">
+                        <span className="dot" />
+                        현재 찜 수: {getLikesForPlace(p.name)}회
+                      </span>
+                    </div>
+                    <div className="btn-row">
+                      <button
+                        type="button"
+                        onClick={() => handleFavorite(p)}
+                        disabled={loading}
+                      >
+                        <span className="icon">⭐</span>
+                        찜하기
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 오른쪽: 인기 순위 */}
+            <div>
+              <div className="ranking-card">
+                <h3 className="ranking-title">인기 관광지 Top</h3>
+                <p className="ranking-sub">
+                  MongoDB에 저장된 찜 수를 기준으로 내림차순 정렬합니다.
+                </p>
+                {favorites.length === 0 ? (
+                  <p style={{ fontSize: "0.85rem", color: "#6b7280" }}>
+                    아직 찜한 장소가 없습니다. 왼쪽에서 관광지를 선택해보세요!
+                  </p>
+                ) : (
+                  <ul className="ranking-list">
+                    {favorites.map((f, idx) => (
+                      <li className="ranking-item" key={f._id || f.placeId}>
+                        <div className="ranking-left">
+                          <span
+                            className={
+                              "rank-badge " +
+                              (idx === 0
+                                ? "rank-1"
+                                : idx === 1
+                                ? "rank-2"
+                                : idx === 2
+                                ? "rank-3"
+                                : "")
+                            }
+                          >
+                            {idx + 1}
+                          </span>
+                          <span>{f.placeName}</span>
+                        </div>
+                        <span className="ranking-count">
+                          {f.likes}회 <small>찜</small>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+
+                <div className="ranking-footer">
+                  총 찜 수: <strong>{totalLikes}</strong>회
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<FavoritesApp />);
+  </script>
+</body>
+</html>
